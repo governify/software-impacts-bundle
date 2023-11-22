@@ -1,0 +1,76 @@
+production:
+  server: 
+    port: 80
+    timeout: 86400000
+    bodySize: 50mb
+    bypassCORS: false
+    useHelmet: false
+    httpOptionsOK: true
+    servePackageInfo: true
+    listenOnHttps: false
+    enableHTTPBasicAuth: true
+  default_render:
+    view: $_[DEFAULT_VIEW]$_[^DEFAULT_VIEW]/index/view.html$_[/DEFAULT_VIEW]
+    model: $_[DEFAULT_MODEL]$_[^DEFAULT_MODEL]/index/model.json$_[/DEFAULT_MODEL]
+    controller: $_[DEFAULT_CONTROLLER]$_[^DEFAULT_CONTROLLER]/index/controller.js$_[/DEFAULT_CONTROLLER]
+  log:
+    level: info
+    file: './logs/pro-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
+    maxFiles: 30 # Max Files that can be created per day reaching the maxSize.
+  auth:
+    user: $_[LOGIN_USER]$_[^LOGIN_USER]governify-admin$_[/LOGIN_USER]
+    password: $_[LOGIN_PASSWORD]$_[^LOGIN_PASSWORD]governify-project$_[/LOGIN_PASSWORD]
+  layout: $_[LAYOUT]$_[^LAYOUT]bootstrap3.html$_[/LAYOUT]
+
+development:
+  server: 
+    port: 5100
+    timeout: 86400000
+    bodySize: 50mb
+    bypassCORS: true
+    useHelmet: true
+    httpOptionsOK: true
+    servePackageInfo: true
+    listenOnHttps: false
+    enableHTTPBasicAuth: true
+  default_render:
+    view: $_[DEFAULT_VIEW]$_[^DEFAULT_VIEW]/index/view.html$_[/DEFAULT_VIEW]
+    model: $_[DEFAULT_MODEL]$_[^DEFAULT_MODEL]/index/model.json$_[/DEFAULT_MODEL]
+    controller: $_[DEFAULT_CONTROLLER]$_[^DEFAULT_CONTROLLER]/index/controller.js$_[/DEFAULT_CONTROLLER]
+  auth:
+    user: $_[LOGIN_USER]$_[^LOGIN_USER]governify-admin$_[/LOGIN_USER]
+    password: $_[LOGIN_PASSWORD]$_[^LOGIN_PASSWORD]governify-project$_[/LOGIN_PASSWORD]
+  
+  log:
+    level: debug
+    file: './logs/dev-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
+    maxFiles: 30 # Max Files that can be created per day reaching the maxSize.
+  layout: $_[LAYOUT]$_[^LAYOUT]bootstrap3.html$_[/LAYOUT]
+
+testing:
+  server:
+    port: 5100
+    timeout: 86400000
+    bodySize: 50mb
+    bypassCORS: true
+    useHelmet: true
+    httpOptionsOK: true
+    servePackageInfo: true
+    listenOnHttps: false
+    enableHTTPBasicAuth: false
+  default_render:
+    view: $_[DEFAULT_VIEW]$_[^DEFAULT_VIEW]/index/view.html$_[/DEFAULT_VIEW]
+    model: $_[DEFAULT_MODEL]$_[^DEFAULT_MODEL]/index/model.json$_[/DEFAULT_MODEL]
+    controller: $_[DEFAULT_CONTROLLER]$_[^DEFAULT_CONTROLLER]/index/controller.js$_[/DEFAULT_CONTROLLER]
+
+  auth:
+    user: $_[LOGIN_USER]$_[^LOGIN_USER]governify-admin$_[/LOGIN_USER]
+    password: $_[LOGIN_PASSWORD]$_[^LOGIN_PASSWORD]governify-project$_[/LOGIN_PASSWORD]
+  log:
+    file: './logs/test-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
+    maxFiles: 30 # Max Files that can be created per day reaching the maxSize.
+  layout: $_[LAYOUT]$_[^LAYOUT]bootstrap3.html$_[/LAYOUT]
+  

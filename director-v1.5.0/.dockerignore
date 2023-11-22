@@ -1,0 +1,11 @@
+.git
+.github
+*Dockerfile*
+*docker-compose*
+node_modules
+*.log
+*.ps1
+*.cmd
+*.sh
+tests
+tasks/*

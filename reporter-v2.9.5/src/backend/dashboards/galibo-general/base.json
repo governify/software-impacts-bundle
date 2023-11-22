@@ -1,0 +1,2107 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 2,
+  "iteration": 1590672593424,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "panels": [],
+      "title": "Vision general",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 0,
+          "displayName": "",
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "operator": "",
+              "text": "",
+              "to": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "green",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disponibilidad"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Disponibilidad"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rendimiento"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Rendimiento"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 2,
+        "x": 0,
+        "y": 1
+      },
+      "id": 28,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "7.0.0",
+      "targets": [
+        {
+          "alias": "Disponibilidad",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'DISPONIBILIDAD_ALTA_ACTIVIDAD'  AND $timeFilter)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'DISPONIBILIDAD_ALTA_ACTIVIDAD'  AND $timeFilter\n)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_MAYOR_95_ALTA_ACTIVIDAD"
+            }
+          ]
+        },
+        {
+          "alias": "Rendimiento",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'TIEMPO_RESPUESTA_ALTA_ACTIVIDAD'  AND $timeFilter)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'TIEMPO_RESPUESTA_ALTA_ACTIVIDAD'  AND $timeFilter\n)\n\n\n\n\n\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "% Cumplimiento [Alta actividad]",
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 2,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 13,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 300,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": ""
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_scope_servicio",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "scope_servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "guaranteeValue"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_ALTA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "scope_servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "lt",
+          "value": 0.95,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "% Disponibilidad (Alta actividad)  [10:00 - 22:00]",
+      "tooltip": {
+        "shared": true,
+        "sort": 1,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": "1",
+          "min": "0.5",
+          "show": true
+        },
+        {
+          "decimals": 2,
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 0,
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "operator": "",
+              "text": "",
+              "to": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "green",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disponibilidad"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Disponibilidad"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rendimiento"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Rendimiento"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 2,
+        "x": 12,
+        "y": 1
+      },
+      "id": 27,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "7.0.0",
+      "targets": [
+        {
+          "alias": "Disponibilidad",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'DISPONIBILIDAD_BAJA_ACTIVIDAD'  AND $timeFilter)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'DISPONIBILIDAD_BAJA_ACTIVIDAD' AND $timeFilter\n)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_MAYOR_95_ALTA_ACTIVIDAD"
+            }
+          ]
+        },
+        {
+          "alias": "Rendimiento",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'TIEMPO_RESPUESTA_BAJA_ACTIVIDAD'  AND $timeFilter)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'TIEMPO_RESPUESTA_BAJA_ACTIVIDAD'  AND $timeFilter\n)\n\n\n\n\n\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "% Cumplimiento [Baja actividad]",
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 14,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 300,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": ""
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_scope_servicio",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "scope_servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "guaranteeValue"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_BAJA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "scope_servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "lt",
+          "value": 0.9,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "% Disponibilidad (Baja actividad) [22:00 - 10:00]",
+      "tooltip": {
+        "shared": true,
+        "sort": 1,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": "1",
+          "min": "0.5",
+          "show": true
+        },
+        {
+          "decimals": 2,
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 2,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "id": 15,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 300,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": ""
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_scope_servicio",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "scope_servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "guaranteeValue"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "TIEMPO_RESPUESTA_ALTA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "scope_servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 4000,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Rendimiento (Alta actividad)  [10:00 - 22:00]",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "ms",
+          "label": "Tiempo de respuesta",
+          "logBase": 1,
+          "max": "10000",
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": 2,
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "id": 16,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 300,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": ""
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_scope_servicio",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "scope_servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "guaranteeValue"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "TIEMPO_RESPUESTA_BAJA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "scope_servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 5000,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Rendimiento (Baja actividad) [22:00 - 10:00]",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "ms",
+          "label": "Tiempo de respuesta",
+          "logBase": 1,
+          "max": "10000",
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": 2,
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 20,
+      "panels": [],
+      "title": "Visualizacion diaria",
+      "type": "row"
+    },
+    {
+      "content": "\n<center><input onchange=\"changeTimeSelected(event)\" id=\"daySelector\" type=\"date\"/></center>\n\n<script>\n\n\nconst urlParams = new URLSearchParams(window.location.search);\nvar currentFrom = urlParams.get(\"var-timeFrom\");\nvar currentTo = urlParams.get(\"var-timeTo\");\n\nvar datePickTo;\nvar datePickFrom;\nif (currentFrom && currentTo){\n  datePickFrom = new Date(parseFloat(currentFrom));\n  datePickTo = new Date(parseFloat(currentTo));\n}\nelse{\n  datePickTo = new Date();\n  datePickTo.setHours(0,0,0,0);\n  datePickFrom = new Date(datePickTo.getTime() - 150800000);\n  var newUrl = updateGrafanaVariableAndGetUrl(\"timeFrom\", datePickFrom.getTime());\n  newUrl = updateGrafanaVariableAndGetUrl(\"timeTo\", datePickTo.getTime(), newUrl);\n  setUrl(newUrl);\n}\ndocument.getElementById('daySelector').valueAsDate = datePickFrom;\n\n\n\nfunction updateGrafanaVariableAndGetUrl(variable, value, href){\n  \n    var hash       = {};\n    var parser     = document.createElement('a');\n    var param = \"var-\" + variable;\n\n    parser.href    = href ? href : location.href;\n\n    var parameters = parser.search.split(/\\?|&/);\n\n    for(var i=0; i < parameters.length; i++) {\n        if(!parameters[i])\n            continue;\n\n        var ary      = parameters[i].split('=');\n        hash[ary[0]] = ary[1];\n    }\n\n    hash[param] = value;\n\n    var list = [];  \n    Object.keys(hash).forEach(function (key) {\n        list.push(key + '=' + hash[key]);\n    });\n\n    parser.search = '?' + list.join('&');\n    return parser.href;\n}\n\nfunction setUrl(url){\n  location.href = url;\n}\n\n\nfunction changeTimeSelected(event){\n  var dateSelected = new Date(event.target.value);\n  var timeFrom = dateSelected.getTime();\n  var timeTo = timeFrom + 86400000;\n  console.log(timeFrom + \" - \" + timeTo);\n  var newUrl = updateGrafanaVariableAndGetUrl(\"timeFrom\", timeFrom);\n  newUrl = updateGrafanaVariableAndGetUrl(\"timeTo\", timeTo, newUrl);\n  setUrl(newUrl);\n}\n\n</script>\n\n\n",
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 22,
+      "mode": "html",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Selecciona dia de visualizacion",
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 0,
+          "displayName": "",
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "operator": "",
+              "text": "",
+              "to": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "green",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disponibilidad"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Disponibilidad"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rendimiento"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Rendimiento"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 2,
+        "x": 0,
+        "y": 20
+      },
+      "id": 24,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "7.0.0",
+      "targets": [
+        {
+          "alias": "Disponibilidad",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'DISPONIBILIDAD_ALTA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'DISPONIBILIDAD_ALTA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/\n)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_MAYOR_95_ALTA_ACTIVIDAD"
+            }
+          ]
+        },
+        {
+          "alias": "Rendimiento",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'TIEMPO_RESPUESTA_ALTA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'TIEMPO_RESPUESTA_ALTA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/ \n)\n\n\n\n\n\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "% Cumplimiento [Alta actividad]",
+      "type": "gauge"
+    },
+    {
+      "columns": [],
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 10,
+        "w": 10,
+        "x": 2,
+        "y": 20
+      },
+      "hideTimeOverride": false,
+      "id": 26,
+      "interval": "1d",
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 3,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "3",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 0,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "Time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": "cell",
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "#E02F44",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "linkTooltip": "",
+          "mappingType": 2,
+          "pattern": "Rendimiento",
+          "preserveFormat": false,
+          "sanitize": false,
+          "thresholds": [
+            "2000"
+          ],
+          "type": "number",
+          "unit": "ms",
+          "valueMaps": []
+        },
+        {
+          "alias": "Disponibilidad",
+          "align": "auto",
+          "colorMode": "cell",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "#56A64B",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "Disponibilidad",
+          "thresholds": [
+            "0.95"
+          ],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "Servicio",
+          "align": "center",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "servicio",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "Disponibilidad",
+          "groupBy": [
+            {
+              "params": [
+                "servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT mean(\"guaranteeValue\") AS \"Disponibilidad\" FROM \"autogen\".\"metrics_values\" WHERE (guaranteeResult = false AND \"id\" = 'DISPONIBILIDAD_ALTA_ACTIVIDAD' AND \"scope_servicio\" =~ /^$Servicio$/) AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms  GROUP BY \"scope_servicio\"",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "Disponibilidad"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_MAYOR_95_ALTA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            }
+          ]
+        },
+        {
+          "alias": "Rendimiento",
+          "groupBy": [
+            {
+              "params": [
+                "servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT mean(\"guaranteeValue\") AS \"Rendimiento\" FROM \"autogen\".\"metrics_values\" WHERE (guaranteeResult = false AND \"id\" = 'TIEMPO_RESPUESTA_ALTA_ACTIVIDAD' AND \"scope_servicio\" =~ /^$Servicio$/) AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms GROUP BY \"scope_servicio\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "Rendimiento"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "TIEMPO_RESPUESTA_INFERIOR_50_ALTA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            },
+            {
+              "condition": "AND",
+              "key": "guaranteeResult",
+              "operator": "!=",
+              "value": "true"
+            }
+          ],
+          "tz": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Alta actividad  [22:00 - 10:00]",
+      "transform": "table",
+      "type": "table-old"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 0,
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "operator": "",
+              "text": "",
+              "to": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "green",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Disponibilidad"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Disponibilidad"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rendimiento"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Rendimiento"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 2,
+        "x": 12,
+        "y": 20
+      },
+      "id": 25,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "7.0.0",
+      "targets": [
+        {
+          "alias": "Disponibilidad",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'DISPONIBILIDAD_BAJA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'DISPONIBILIDAD_BAJA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/\n)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_MAYOR_95_ALTA_ACTIVIDAD"
+            }
+          ]
+        },
+        {
+          "alias": "Rendimiento",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(cumpliendo) / (count(nocumpliendo)+count(cumpliendo)) AS Ratio1\nFROM (\nSELECT guaranteeValue as cumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = true AND \"id\" = 'TIEMPO_RESPUESTA_BAJA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/)\n,\n(\nSELECT guaranteeValue as nocumpliendo FROM metrics.autogen.metrics_values WHERE guaranteeResult = false AND \"id\" = 'TIEMPO_RESPUESTA_BAJA_ACTIVIDAD' AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms AND \"scope_servicio\" =~ /^$Servicio$/\n)\n\n\n\n\n\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "% Cumplimiento [Baja actividad]",
+      "type": "gauge"
+    },
+    {
+      "columns": [],
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 10,
+        "w": 10,
+        "x": 14,
+        "y": 20
+      },
+      "hideTimeOverride": false,
+      "id": 7,
+      "interval": "1d",
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 3,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "3",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 0,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "Time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": "cell",
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "#E02F44",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "linkTooltip": "",
+          "mappingType": 2,
+          "pattern": "Rendimiento",
+          "preserveFormat": false,
+          "sanitize": false,
+          "thresholds": [
+            "3000"
+          ],
+          "type": "number",
+          "unit": "ms",
+          "valueMaps": []
+        },
+        {
+          "alias": "Disponibilidad",
+          "align": "auto",
+          "colorMode": "cell",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "#56A64B",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "Disponibilidad",
+          "thresholds": [
+            "0.95"
+          ],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "Servicio",
+          "align": "center",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "servicio",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "Disponibilidad",
+          "groupBy": [
+            {
+              "params": [
+                "servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT mean(\"guaranteeValue\") AS \"Disponibilidad\" FROM \"autogen\".\"metrics_values\" WHERE (guaranteeResult = false AND \"id\" = 'DISPONIBILIDAD_BAJA_ACTIVIDAD' AND \"scope_servicio\" =~ /^$Servicio$/ ) AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms GROUP BY \"scope_servicio\"",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "Disponibilidad"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "DISPONIBILIDAD_MAYOR_90_BAJA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            }
+          ]
+        },
+        {
+          "alias": "Rendimiento",
+          "groupBy": [
+            {
+              "params": [
+                "servicio"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "metrics_values",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT mean(\"guaranteeValue\") AS \"Rendimiento\" FROM \"autogen\".\"metrics_values\" WHERE (guaranteeResult = false AND \"id\" = 'TIEMPO_RESPUESTA_BAJA_ACTIVIDAD' AND \"scope_servicio\" =~ /^$Servicio$/ ) AND time >= [[timeFrom]]ms AND time <= [[timeTo]]ms  GROUP BY \"scope_servicio\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "Rendimiento"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=",
+              "value": "TIEMPO_RESPUESTA_INFERIOR_70_BAJA_ACTIVIDAD"
+            },
+            {
+              "condition": "AND",
+              "key": "servicio",
+              "operator": "=~",
+              "value": "/^$Servicio$/"
+            }
+          ],
+          "tz": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Baja actividad  [22:00 - 10:00]",
+      "transform": "table",
+      "type": "table-old"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 25,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Consejeria",
+        "multi": false,
+        "name": "Consejeria",
+        "options": [],
+        "query": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Servicio",
+        "multi": true,
+        "name": "Servicio",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_consultaListadoRPAs_v1.0.0",
+            "value": "INT_PRV_consultaListadoRPAs_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CITASCADE_V1.0.0",
+            "value": "INT_PRV_CITASCADE_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CONSULTA_GASTOS_PAGOS_v1.0.0",
+            "value": "INT_PRV_CONSULTA_GASTOS_PAGOS_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CONSULTA_GASTOS_PAGOS_DETALLES_v1.0.0",
+            "value": "INT_PRV_CONSULTA_GASTOS_PAGOS_DETALLES_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CITASTRIBUTARIAS_V1.0.0",
+            "value": "INT_PRV_CITASTRIBUTARIAS_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_DIPA_V1.0.0",
+            "value": "INT_PRV_DIPA_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CertificadoAcreditacionCompetencias_v1.0.0",
+            "value": "INT_PRV_CertificadoAcreditacionCompetencias_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_TARJETASANITARIA_V1.0.0",
+            "value": "INT_PRV_TARJETASANITARIA_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CITASEVO_V1.0.0",
+            "value": "INT_PRV_CITASEVO_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_TAJ65_v1.0.0",
+            "value": "INT_PRV_TAJ65_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CarnetJoven_V1.0.0",
+            "value": "INT_PRV_CarnetJoven_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CartaAdjudicacionRTL_V1.0.0",
+            "value": "INT_PRV_CartaAdjudicacionRTL_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CertificadoProfesionalidad_V1.0.0",
+            "value": "INT_PRV_CertificadoProfesionalidad_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_ConsultaDemDatosDARDE_v1.0.0",
+            "value": "INT_PRV_ConsultaDemDatosDARDE_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CitasSAE_v1.0.0",
+            "value": "INT_PRV_CitasSAE_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CarnetGuiaTuristico_V1.0.0",
+            "value": "INT_PRV_CarnetGuiaTuristico_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CertificadoDAR_V1.0.0",
+            "value": "INT_PRV_CertificadoDAR_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_RecuperacionFotografiaGT_v1.0.0",
+            "value": "INT_PRV_RecuperacionFotografiaGT_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_GeneracionCertificadoDeportistaRendimiento_v1.0.0",
+            "value": "INT_PRV_GeneracionCertificadoDeportistaRendimiento_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CarnetBiblioteca_v1.0.0",
+            "value": "INT_PRV_CarnetBiblioteca_v1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PUB_CONSULTA_LICENCIA_PESCA_CAPDER_V1.0.0",
+            "value": "INT_PUB_CONSULTA_LICENCIA_PESCA_CAPDER_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PUB_CONSULTA_LICENCIA_CAZA_PESCA_CMAOT_V1.0.0",
+            "value": "INT_PUB_CONSULTA_LICENCIA_CAZA_PESCA_CMAOT_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PUB_CONSULTA_TITULOS_UNIVERSITARIOS_MECD_V1.0.0",
+            "value": "INT_PUB_CONSULTA_TITULOS_UNIVERSITARIOS_MECD_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PUB_CONSULTA_TITULOS_NO_UNIVERSITARIOS_MECD_V1.0.0",
+            "value": "INT_PUB_CONSULTA_TITULOS_NO_UNIVERSITARIOS_MECD_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_notificacionesCC_JDA_1.8",
+            "value": "INT_PRV_notificacionesCC_JDA_1.8"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_notificacionesCC_AGE_1.3",
+            "value": "INT_PRV_notificacionesCC_AGE_1.3"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_GESTIONDECITAS_V1.0.0",
+            "value": "INT_PRV_GESTIONDECITAS_V1.0.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_CC_COM_ASINCRONA",
+            "value": "INT_PRV_CC_COM_ASINCRONA"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_citasPaciente_v1.0",
+            "value": "INT_PRV_citasPaciente_v1.0"
+          },
+          {
+            "selected": false,
+            "text": "INT_PRV_citasRadiologia_v1.0",
+            "value": "INT_PRV_citasRadiologia_v1.0"
+          }
+        ],
+        "query": "INT_PRV_consultaListadoRPAs_v1.0.0,       INT_PRV_CITASCADE_V1.0.0,       INT_PRV_CONSULTA_GASTOS_PAGOS_v1.0.0,       INT_PRV_CONSULTA_GASTOS_PAGOS_DETALLES_v1.0.0,       INT_PRV_CITASTRIBUTARIAS_V1.0.0,       INT_PRV_DIPA_V1.0.0,       INT_PRV_CertificadoAcreditacionCompetencias_v1.0.0,       INT_PRV_TARJETASANITARIA_V1.0.0,       INT_PRV_CITASEVO_V1.0.0,       INT_PRV_TAJ65_v1.0.0,       INT_PRV_CarnetJoven_V1.0.0,       INT_PRV_CartaAdjudicacionRTL_V1.0.0,       INT_PRV_CertificadoProfesionalidad_V1.0.0,       INT_PRV_ConsultaDemDatosDARDE_v1.0.0,       INT_PRV_CitasSAE_v1.0.0,       INT_PRV_CarnetGuiaTuristico_V1.0.0,       INT_PRV_CertificadoDAR_V1.0.0,       INT_PRV_RecuperacionFotografiaGT_v1.0.0,       INT_PRV_GeneracionCertificadoDeportistaRendimiento_v1.0.0,       INT_PRV_CarnetBiblioteca_v1.0.0,       INT_PUB_CONSULTA_LICENCIA_PESCA_CAPDER_V1.0.0,       INT_PUB_CONSULTA_LICENCIA_CAZA_PESCA_CMAOT_V1.0.0,       INT_PUB_CONSULTA_TITULOS_UNIVERSITARIOS_MECD_V1.0.0,       INT_PUB_CONSULTA_TITULOS_NO_UNIVERSITARIOS_MECD_V1.0.0,       INT_PRV_notificacionesCC_JDA_1.8,       INT_PRV_notificacionesCC_AGE_1.3,       INT_PRV_GESTIONDECITAS_V1.0.0,       INT_PRV_CC_COM_ASINCRONA,       INT_PRV_citasPaciente_v1.0,       INT_PRV_citasRadiologia_v1.0",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "1590466000000",
+          "value": "1590466000000"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "timeFrom",
+        "options": [
+          {
+            "selected": false,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "1590466000000",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "1590616800000",
+          "value": "1590616800000"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "timeTo",
+        "options": [
+          {
+            "selected": false,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "1590616800000",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "V2",
+  "uid": "IyfjMSqZz",
+  "version": 38
+}

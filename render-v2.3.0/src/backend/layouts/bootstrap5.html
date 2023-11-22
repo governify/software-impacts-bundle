@@ -1,0 +1,104 @@
+<html ng-app='renderApp'>
+
+
+<head>
+    <title>UI - Governify</title>
+
+    <link rel='shortcut icon' href='./utils/img/favicon.ico'>
+
+
+    <script type='text/javascript' src='./utils/js/jquery/dist/jquery.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src='./utils/js/angular/angular.js'></script>
+
+    <script type='text/javascript' src='./utils/js/angular-route/angular-route.js'></script>
+
+    <script type='text/javascript' src='./utils/js/angular-ui-router/release/angular-ui-router.js'></script>
+
+    <script type='text/javascript' src='./utils/js/angular-route/angular-route.min.js'></script>
+
+    <script type='text/javascript' src='./utils/js/angular-sanitize/angular-sanitize.min.js'></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('preloader working');
+            setTimeout(function () {
+                $('#preloader').fadeOut();
+                $('.preloader_img').delay(500).fadeOut('slow');
+            }, 1000);
+        });
+    </script>
+    <style>
+        .preloader_img {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-image: url(./utils/img/loading1_big_lgbg.gif);
+            background-repeat: no-repeat;
+            background-color: #fff;
+            background-position: center;
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+
+
+<body class='container' ng-controller='renderController'>
+    <div id='preloader'>
+        <div class='preloader_img'></div>
+
+    </div>
+    <div id='my-element'></div>
+
+    <script type='text/javascript'>
+        'use strict';
+        angular
+            .module('renderApp', [
+                'ui.router',
+                'ngSanitize'
+            ]);
+        angular
+            .module('renderApp')
+            .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+                $sceDelegateProvider.resourceUrlWhitelist(['**']);
+                console.log('App Initialized');
+            }
+            ]);
+        angular
+            .module('renderApp')
+            .directive('contenteditable', function () {
+                return {
+                    require: 'ngModel',
+                    link: function (scope, element, attrs, ctrl) {
+                        element.bind('blur', function () {
+                            scope.$apply(function () {
+                                ctrl.$setViewValue(element.html());
+                            });
+                        });
+                        ctrl.$render = function () {
+                            element.html(ctrl.$viewValue);
+                        };
+                        ctrl.$render();
+                    }
+                };
+            });
+        angular
+            .module('renderApp')
+            .controller('renderController', function ($scope, $http, $location, $state, $stateParams, $templateRequest, $sce, $compile, $q) {
+                console.log('Render Controller Initialized');
+                $compile($('#my-element').html(`$_[FILE_VIEW]`).contents())($scope);
+                $scope.model = $_[FILE_MODEL];
+                $_[FILE_CONTROLLER]
+
+            });
+    </script>
+</body>
+
+
+</html>

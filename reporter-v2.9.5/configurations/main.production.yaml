@@ -1,0 +1,37 @@
+server:
+  port: 5000
+  timeout: 86400000
+  bodySize: 50mb
+  bypassCORS: true
+  useHelmet: false
+  httpOptionsOK: true
+  servePackageInfo: true
+  listenOnHttps: false
+log:
+  level: info
+  file: "./logs/prod-logs.log" #Where log file will be saved. Date will be concatenated before the name.
+  maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
+  maxFiles: 10 # Max Files that can be created per day reaching the maxSize.
+
+telemetry:
+  enabled: false
+  server: governify-telemetry:8200
+
+demo: true
+port: 80
+influx:
+  host: influxdb
+  database: metrics
+  measurement: metrics_values
+  measurement_historical: metrics_values_historical
+  fields:
+    value: Influx.FieldType.INTEGER
+  tags:
+    - id
+    - priority
+    - agreement
+defaults:
+  loop: true
+  timer: 10000
+registryMaxRetries: 5
+timeBetweenRequests: 500

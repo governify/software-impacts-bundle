@@ -1,0 +1,154 @@
+production:
+  server: 
+    port: 5000
+    timeout: 86400000
+    bodySize: 50mb
+    bypassCORS: false
+    useHelmet: false
+    httpOptionsOK: true
+    servePackageInfo: true
+    listenOnHttps: false
+  log:
+    level: info
+    file: './logs/prod-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
+    maxFiles: 10 # Max Files that can be created per day reaching the maxSize.
+
+  telemetry:
+    enabled: $_[TELEMETRY_ENABLED]$_[^TELEMETRY_ENABLED]false$_[/TELEMETRY_ENABLED]
+    server: $_[TELEMETRY_SERVER]$_[^TELEMETRY_SERVER]governify-telemetry:8200$_[/TELEMETRY_SERVER]
+  
+  demo: true
+  port: 80
+  influx:
+    host: $_[DB_HOST]$_[^DB_HOST]influxdb$_[/DB_HOST]
+    database: $_[DB_NAME]$_[^DB_NAME]metrics$_[/DB_NAME]
+    measurement: metrics_values
+    measurement_historical: metrics_values_historical
+    fields:
+      value: Influx.FieldType.INTEGER
+    tags:
+      - id
+      - priority
+      - agreement
+  defaults:
+    loop: true
+    timer: 10000
+  v1:
+    agreementURL: 'http://registry/api/v6/agreements/'
+    statesURL: 'http://registry/api/v6/states/'
+  v2:
+    agreementURL: 'http://registry/api/v6/agreements/'
+    statesURL: 'http://registry/api/v6/states/'
+  v4:
+    agreementURL: 'http://registry/api/v6/agreements/'
+    statesURL: 'http://registry/api/v6/states/'
+  registryMaxRetries: 5
+  timeBetweenRequests: 500
+  public_config: # This config will be exposed to front-end
+    registry_endpoint: 'https://registry$_[SERVICES_PREFIX]$_[^SERVICES_PREFIX]galibo$_[/SERVICES_PREFIX]$_[DNS_SUFFIX]$_[^DNS_SUFFIX].governify.io$_[/DNS_SUFFIX]'
+    registry_apiVersion: 6
+    dashboard_url: 'https://dashboard$_[SERVICES_PREFIX]$_[^SERVICES_PREFIX]galibo$_[/SERVICES_PREFIX]$_[DNS_SUFFIX]$_[^DNS_SUFFIX].governify.io$_[/DNS_SUFFIX]'
+
+
+development:
+  server: 
+    port: 1000
+    timeout: 86400000
+    bodySize: 50mb
+    bypassCORS: true
+    useHelmet: true
+    httpOptionsOK: true
+    servePackageInfo: true
+    listenOnHttps: false
+  log:
+    level: debug
+    file: './logs/dev-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
+    maxFiles: 10 # Max Files that can be created per day reaching the maxSize.
+  
+  telemetry:
+    enabled: $_[TELEMETRY_ENABLED]$_[^TELEMETRY_ENABLED]false$_[/TELEMETRY_ENABLED]
+    server: $_[TELEMETRY_SERVER]$_[^TELEMETRY_SERVER]localhost:8200$_[/TELEMETRY_SERVER]
+  demo: true
+  port: 8085
+  influx:
+    host: localhost
+    database: metrics
+    measurement: metrics_values
+    measurement_historical: metrics_values_historical
+    fields:
+      value: Influx.FieldType.INTEGER
+    tags:
+      - id
+      - priority
+      - agreement
+  defaults:
+    loop: false
+    timer: 10000
+  v1:
+    agreementURL: 'http://localhost:8081/api/v6/agreements/'
+    statesURL: 'http://localhost:8081/api/v6/states/'
+  v2:
+    agreementURL: 'http://localhost:8081/api/v6/agreements/'
+    statesURL: 'http://localhost:8081/api/v6/states/'
+  v4:
+    agreementURL: 'http://localhost:8081/api/v6/agreements/'
+    statesURL: 'http://localhost:8081/api/v6/states/'
+  registryMaxRetries: 5
+
+  public_config: # This config will be exposed to front-end
+    registry_endpoint: 'http://localhost:8081'
+    registry_apiVersion: 5
+    dashboard_url: 'http://localhost:3000'
+
+testing:
+  server:
+    port: 5000
+    timeout: 86400000
+    bodySize: 50mb
+    bypassCORS: true
+    useHelmet: true
+    httpOptionsOK: true
+    servePackageInfo: true
+    listenOnHttps: false
+  log:
+    level: debug
+    file: './logs/test-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
+    maxFiles: 10 # Max Files that can be created per day reaching the maxSize.
+  telemetry:
+    enabled: $_[TELEMETRY_ENABLED]$_[^TELEMETRY_ENABLED]false$_[/TELEMETRY_ENABLED]
+    server: $_[TELEMETRY_SERVER]$_[^TELEMETRY_SERVER]localhost:8200$_[/TELEMETRY_SERVER]
+  demo: true
+  port: 8085
+  influx:
+    host: localhost
+    database: metrics
+    measurement: metrics_values
+    measurement_historical: metrics_values_historical
+    fields:
+      value: Influx.FieldType.INTEGER
+    tags:
+      - id
+      - priority
+      - agreement
+  defaults:
+    loop: false
+    timer: 10000
+  v1:
+    agreementURL: 'http://localhost:8081/api/v6/agreements/'
+    statesURL: 'http://localhost:8081/api/v6/states/'
+  v2:
+    agreementURL: 'http://localhost:8081/api/v6/agreements/'
+    statesURL: 'http://localhost:8081/api/v6/states/'
+  v4:
+    agreementURL: 'http://localhost:8081/api/v6/agreements/'
+    statesURL: 'http://localhost:8081/api/v6/states/'
+  registryMaxRetries: 5
+
+  public_config: # This config will be exposed to front-end
+    registry_endpoint: 'http://localhost:8081'
+    registry_apiVersion: 5
+    dashboard_url: 'http://localhost:3000'
+  
